@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday PROM</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-family: 'Comic Sans MS', cursive;
+    background: linear-gradient(to right, #ffdde1, #ee9ca7);
+    overflow: hidden;
+  }
+
+  h2 {
+    font-size: 2rem;
+    margin-top: 3rem;
+    color: #fff;
+    text-shadow: 2px 2px 5px #00000033;
+  }
+
+  .flower-choice button {
+    padding: 1rem 2rem;
+    margin: 1rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    background-color: #fff;
+    color: #333;
+    transition: transform 0.2s;
+  }
+  .flower-choice button:hover {
+    transform: scale(1.1);
+    background-color: #ffe8f0;
+  }
+
+  /* Happy Birthday animation */
+  h1 {
+    font-size: 3rem;
+    background: linear-gradient(to right, #ff416c, #ff4b2b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glow 2s infinite alternate;
+    margin-top: 2rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  @keyframes glow {
+    from {text-shadow: 0 0 10px #ff99aa;}
+    to {text-shadow: 0 0 25px #ffffff;}
+  }
+
+  #scene {
+    display: none;
+    animation: fadeIn 2s forwards;
+    position: relative;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+  #boy {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 2rem;
+    position: relative;
+    z-index: 10;
+  }
+  #boy img {
+    height: 150px;
+  }
+
+  /* Balloons */
+  .balloon {
+    position: absolute;
+    bottom: -150px;
+    font-size: 3rem;
+    animation: rise 10s linear infinite;
+    z-index: 1;
+  }
+
+  @keyframes rise {
+    0% {transform: translateY(0);}
+    100% {transform: translateY(-110vh);}
+  }
+
+  /* Confetti hearts */
+  .confetti {
+    position: absolute;
+    top: -50px;
+    font-size: 1.5rem;
+    animation: fall 7s linear infinite;
+    z-index: 1;
+  }
+
+  @keyframes fall {
+    0% {transform: translateY(0) rotate(0deg);}
+    100% {transform: translateY(110vh) rotate(720deg);}
+  }
+</style>
+</head>
+<body>
+
+<div class="flower-choice">
+  <h2>Choose a flower for PROM 🌸</h2>
+  <button onclick="chooseFlower('tulip')">Tulip 🌷</button>
+  <button onclick="chooseFlower('sunflower')">Sunflower 🌻</button>
+</div>
+
+<div id="scene">
+  <h1>🎉 Happy Birthday PROM 🎉</h1>
+  <div id="boy">
+    <!-- boy + flower + cake will be inserted here -->
+  </div>
+  <audio id="song" src="happybirthday.mp3"></audio>
+</div>
+
+<script>
+// floating balloons
+const balloonSymbols = ['🎈','🎉','🎊','💖'];
+for (let i=0; i<20; i++) {
+  let b = document.createElement('div');
+  b.className = 'balloon';
+  b.textContent = balloonSymbols[Math.floor(Math.random()*balloonSymbols.length)];
+  b.style.left = Math.random()*100 + 'vw';
+  b.style.animationDuration = (6+Math.random()*6) + 's';
+  document.body.appendChild(b);
+}
+
+// confetti hearts/stars
+const confettiSymbols = ['💖','💜','💛','💙','✨','⭐'];
+for (let i=0; i<40; i++) {
+  let c = document.createElement('div');
+  c.className = 'confetti';
+  c.textContent = confettiSymbols[Math.floor(Math.random()*confettiSymbols.length)];
+  c.style.left = Math.random()*100 + 'vw';
+  c.style.animationDuration = (5+Math.random()*5) + 's';
+  c.style.fontSize = (1+Math.random()*1.5)+'rem';
+  document.body.appendChild(c);
+}
+
+function chooseFlower(flower) {
+  document.querySelector('.flower-choice').style.display = 'none';
+  document.getElementById('scene').style.display = 'block';
+
+  // Clear previous
+  const boyDiv = document.getElementById('boy');
+  boyDiv.innerHTML = '';
+
+  // Add images: boy + chosen flower + cake
+  let boyImg = document.createElement('img');
+  boyImg.src = 'boy.png';
+
+  let flowerImg = document.createElement('img');
+  flowerImg.src = flower === 'tulip' ? 'tulip.png' : 'sunflower.png';
+
+  let cakeImg = document.createElement('img');
+  cakeImg.src = 'cake.png';
+
+  boyDiv.appendChild(boyImg);
+  boyDiv.appendChild(flowerImg);
+  boyDiv.appendChild(cakeImg);
+
+  let song = document.getElementById('song');
+  song.play();
+}
+</script>
+
+</body>
+</html>
